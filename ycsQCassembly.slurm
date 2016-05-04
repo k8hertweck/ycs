@@ -13,7 +13,7 @@
 
 #module load 
 
-cd /work/03177/hertweck/ycs
+cd /work/03177/hertweck/ycs/trinity_out_dir
 
 # read representation of assembly
 $TACC_TRINITY_DIR/util/bowtie_PE_separate_then_join.pl --seqType fq \

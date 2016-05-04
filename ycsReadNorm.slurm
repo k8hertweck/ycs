@@ -4,9 +4,9 @@
 
 #SBATCH -J ycsReadNorm	# Job name
 #SBATCH -o ycsReadNorm.%j.out	# Name of stdout output file (%j expands to jobId)
-#SBATCH -p normal	# Queue name
+#SBATCH -p development	# Queue name
 #SBATCH -n 16	# Total number of  tasks requested
-#SBATCH -t 24:00:00	# Run time (hh:mm:ss) 
+#SBATCH -t 2:00:00	# Run time (hh:mm:ss) 
 #SBATCH --mail-user k8hertweck@gmail.com	# email to notify	
 #SBATCH --mail-type END	# when to notify email
 #SBATCH -A ycs	# Allocation name to charge job against
@@ -17,8 +17,24 @@ DATA=/scratch/03177/hertweck/ycs
 
 cd $DATA/trimKate
 
+gunzip MkCM4St1-51_*
 perl $TACC_TRINITY_DIR/util/insilico_read_normalization.pl --seqType fq --JM 10G --CPU 16 \
 	--max_cov 30 \
 	--left MkCM4St1-51_1paired.fq.gz \
 	--right MkCM4St1-51_2paired.fq.gz
 
+cd $DATA/trimDoc
+
+gunzip MkCM4St1-51_*
+perl $TACC_TRINITY_DIR/util/insilico_read_normalization.pl --seqType fq --JM 10G --CPU 16 \
+        --max_cov 30 \
+        --left MkCM4St1-51_1paired.fq \
+        --right MkCM4St1-51_2paired.fq
+
+cd $DATA/trimTrinity
+
+gunzip MkCM4St1-51_*
+perl $TACC_TRINITY_DIR/util/insilico_read_normalization.pl --seqType fq --JM 10G --CPU 16 \
+        --max_cov 30 \
+        --left MkCM4St1-51_1paired.fq \
+        --right MkCM4St1-51_2paired.fq
