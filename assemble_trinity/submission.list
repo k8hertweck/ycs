@@ -1,0 +1,5 @@
+trinity_jelly_largemem.slurm
+trinity_chrys_largemem.slurm
+trinity_quantgraph.slurm
+trinity_butterfly.slurm
+trinity_findcat.slurm
