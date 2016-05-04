@@ -1,6 +1,6 @@
 #!/bin/bash
 
-## assembly of transcriptome data 
+## assembly of transcriptome data (works, but takes a long time b/c not optimized; see ycs_assemble_trinity.sh 
 
 #SBATCH -J ycsAssembly	# Job name
 #SBATCH -o ycsAssembly.%j.out	# Name of stdout output file (%j expands to jobId)
