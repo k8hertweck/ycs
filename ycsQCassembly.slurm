@@ -11,7 +11,7 @@
 #SBATCH --mail-type END	# when to notify email
 #SBATCH -A ycs	# Allocation name to charge job against
 
-#module load 
+module load perl intel/14.0.1.106 bowtie/1.1.1 samtools/0.1.19 trinityrnaseq
 
 cd /work/03177/hertweck/ycs/trinity_out_dir
 
