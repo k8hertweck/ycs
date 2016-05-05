@@ -18,7 +18,7 @@ TRIM=/work/03177/hertweck/myapps/Trimmomatic-0.36
 cd /scratch/03177/hertweck/ycs/original
 
 # QC of raw files
-fastqc -o fastqc *.fastq.gz
+fastqc -o fastqc *.fq.gz
 
 # quality trimming 
 
@@ -29,7 +29,7 @@ java -jar $TRIM/trimmomatic-0.36.jar PE -threads 16 -phred33 \
 	ILLUMINACLIP:$TRIM/adapters/TruSeq3-PE.fa:2:30:10 SLIDINGWINDOW:4:20 LEADING:15 TRAILING:15  MINLEN:50
 
 cd ../trimKate
-fastqc *.fastq.gz
+fastqc *.fq.gz
 cd ../original
 
 
