@@ -4,9 +4,9 @@
 
 #SBATCH -J ycsReadNorm	# Job name
 #SBATCH -o ycsReadNorm.%j.out	# Name of stdout output file (%j expands to jobId)
-#SBATCH -p development	# Queue name
+#SBATCH -p normal	# Queue name
 #SBATCH -n 16	# Total number of  tasks requested
-#SBATCH -t 2:00:00	# Run time (hh:mm:ss) 
+#SBATCH -t 24:00:00	# Run time (hh:mm:ss) 
 #SBATCH --mail-user k8hertweck@gmail.com	# email to notify	
 #SBATCH --mail-type END	# when to notify email
 #SBATCH -A ycs	# Allocation name to charge job against
