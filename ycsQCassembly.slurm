@@ -21,13 +21,8 @@ $TACC_TRINITY_DIR/util/bowtie_PE_separate_then_join.pl --seqType fq \
               --target Trinity.fasta --aligner bowtie \
               -- -p 4 --all --best --strata -m 300  # following -- are params that get tacked onto the bowtie command.
 
-$TACC_TRINITY_DIR/util/SAM_nameSorted_to_uniq_count_stats.pl bowtie_out/bowtie_out.nameSorted.bam
+$TACC_TRINITY_DIR/util/SAM_nameSorted_to_uniq_count_stats.pl bowtie_out/bowtie_out.nameSorted.bam > mappedReads.out
 
-# transcriptome contig Nx statistic
-$TACC_TRINITY_DIR/util/TrinityStats.pl  Trinity.fasta
-
-# contig ExN50 statistic
-$TACC_TRINITY_DIR/util/misc/contig_ExN50_statistic.pl \
-     transcripts.TMM.EXPR.matrix Trinity.fasta | tee ExN50.stats
-
+# transcriptome contig Nx statistic 
+$TACC_TRINITY_DIR/util/TrinityStats.pl  Trinity.fasta > Nx.out
 
