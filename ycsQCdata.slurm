@@ -1,9 +1,9 @@
 #!/bin/bash
 
-## assembly of transcriptome data 
+## quality control of raw sequence data prior to assembly 
 
-#SBATCH -J ycsQC	# Job name
-#SBATCH -o ycsQC.%j.out	# Name of stdout output file (%j expands to jobId)
+#SBATCH -J ycsQCdata	# Job name
+#SBATCH -o ycsQCdata.%j.out	# Name of stdout output file (%j expands to jobId)
 #SBATCH -p normal	# Queue name
 #SBATCH -n 16	# Total number of  tasks requested
 #SBATCH -t 24:00:00	# Run time (hh:mm:ss) 
@@ -18,7 +18,7 @@ TRIM=/work/03177/hertweck/myapps/Trimmomatic-0.36
 cd /scratch/03177/hertweck/ycs/FV6Mk
 
 # QC of raw files
-fastqc *.fq.gz
+fastqc *.fastq.gz
 mkdir fastqc
 mv *_fastq* fastqc
 
