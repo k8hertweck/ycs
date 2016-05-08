@@ -19,12 +19,10 @@ cd /scratch/03177/hertweck/ycs/FV6Mk
 
 # QC of raw files
 fastqc *.fastq.gz
-mkdir fastqc
-mv *_fastq* fastqc
 
 ## loop across all data files in set
 
-for x in `cat FV6Mk.lst`
+for x in `cat ../FV6Mk.lst`
 	do
 		# quality trimming 
 			java -jar $TRIM/trimmomatic-0.36.jar PE -threads 16 -phred33 \
