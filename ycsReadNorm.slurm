@@ -4,7 +4,7 @@
 
 #SBATCH -J ycsReadNorm	# Job name
 #SBATCH -o ycsReadNorm.%j.out	# Name of stdout output file (%j expands to jobId)
-#SBATCH -p normal	# Queue name
+#SBATCH -p largemem	# Queue name
 #SBATCH -n 16	# Total number of  tasks requested
 #SBATCH -t 24:00:00	# Run time (hh:mm:ss) 
 #SBATCH --mail-user k8hertweck@gmail.com	# email to notify	
@@ -22,7 +22,7 @@ awk '{print $0 "_1paired.fq"}' ../FV6Mk.lst > FV6Mkleft.lst
 awk '{print $0 "_2paired.fq"}' ../FV6Mk.lst > FV6Mkright.lst
 
 gunzip *1paired.fq.gz *2paired.fq.gz
-perl $TACC_TRINITY_DIR/util/insilico_read_normalization.pl --seqType fq --JM 30G --CPU 16 \
+perl $TACC_TRINITY_DIR/util/insilico_read_normalization.pl --seqType fq --JM 500G --CPU 16 \
 	--max_cov 30 \
 	--left_list FV6Mkleft.lst \
 	--right_list FV6Mkright.lst
