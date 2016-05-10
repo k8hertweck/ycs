@@ -6,3 +6,5 @@
   * ycsReadNorm.slurm: read normalization using Trinity
   * ycs_assemble_trinity.sh: TACC script splitter to run Trinity assembly
   * ycsQCassembly.slurm: assessing Trinity assembly
+* test/
+  * scripts for running single sets of files, and testing paramters for different steps
