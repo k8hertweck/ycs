@@ -13,16 +13,21 @@
 
 module load perl intel/14.0.1.106 bowtie/1.1.1 samtools/0.1.19 trinityrnaseq
 
-cd /work/03177/hertweck/ycs/trinity_out_dir
+cd /scratch/03177/hertweck/ycs
 
-# read representation of assembly
-$TACC_TRINITY_DIR/util/bowtie_PE_separate_then_join.pl --seqType fq \
-              --left left.fq --right right.fq \
-              --target Trinity.fasta --aligner bowtie \
-              -- -p 4 --all --best --strata -m 300  # following -- are params that get tacked onto the bowtie command.
+for x in trimTrinity
+	do
+		cd $x/trinity_out_dir
 
-$TACC_TRINITY_DIR/util/SAM_nameSorted_to_uniq_count_stats.pl bowtie_out/bowtie_out.nameSorted.bam > mappedReads.out
+		# read representation of assembly
+		$TACC_TRINITY_DIR/util/bowtie_PE_separate_then_join.pl --seqType fq \
+              	--left ../left.norm.fq --right ../right.norm.fq \
+              	--target Trinity.fasta --aligner bowtie \
+              	-- -p 4 --all --best --strata -m 300 
 
-# transcriptome contig Nx statistic 
-$TACC_TRINITY_DIR/util/TrinityStats.pl  Trinity.fasta > Nx.out
+		$TACC_TRINITY_DIR/util/SAM_nameSorted_to_uniq_count_stats.pl \
+		bowtie_out/bowtie_out.nameSorted.bam > mappedReads.out
 
+		# transcriptome contig Nx statistic 
+		$TACC_TRINITY_DIR/util/TrinityStats.pl  Trinity.fasta > Nx.out
+done
