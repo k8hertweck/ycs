@@ -15,26 +15,15 @@ module load perl intel/14.0.1.106 bowtie/1.1.1 samtools/0.1.19 trinityrnaseq
 
 DATA=/scratch/03177/hertweck/ycs
 
-cd $DATA/trimKate
+cd $DATA/FV6Mktrim
 
-gunzip MkCM4St1-51_*
-perl $TACC_TRINITY_DIR/util/insilico_read_normalization.pl --seqType fq --JM 10G --CPU 16 \
+# make list of read files
+awk '{print $0 "_1paired.fq"}' ../FV6Mk.lst > FV6Mkleft.lst
+awk '{print $0 "_2paired.fq"}' ../FV6Mk.lst > FV6Mkright.lst
+
+gunzip *1paired.fq.gz *2paired.fq.gz
+perl $TACC_TRINITY_DIR/util/insilico_read_normalization.pl --seqType fq --JM 30G --CPU 16 \
 	--max_cov 30 \
-	--left MkCM4St1-51_1paired.fq.gz \
-	--right MkCM4St1-51_2paired.fq.gz
+	--left_list FV6Mkleft.lst \
+	--right_list FV6Mkright.lst
 
-cd $DATA/trimDoc
-
-gunzip MkCM4St1-51_*
-perl $TACC_TRINITY_DIR/util/insilico_read_normalization.pl --seqType fq --JM 10G --CPU 16 \
-        --max_cov 30 \
-        --left MkCM4St1-51_1paired.fq \
-        --right MkCM4St1-51_2paired.fq
-
-cd $DATA/trimTrinity
-
-gunzip MkCM4St1-51_*
-perl $TACC_TRINITY_DIR/util/insilico_read_normalization.pl --seqType fq --JM 10G --CPU 16 \
-        --max_cov 30 \
-        --left MkCM4St1-51_1paired.fq \
-        --right MkCM4St1-51_2paired.fq
