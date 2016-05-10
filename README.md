@@ -2,6 +2,7 @@
 
 * slurm scripts for running on TACC's Stampede
 * scripts:
-  * ycsQC.slurm: fastqc and trimmomatic
-  * ycsReadNorm: read normalization using Trinity
-  * ycsAssembly: transcript assembly using Trinity
+  * ycsQCdata.slurm: fastqc and trimmomatic
+  * ycsReadNorm.slurm: read normalization using Trinity
+  * ycs_assemble_trinity.sh: TACC script splitter to run Trinity assembly
+  * ycsQCassembly.slurm: assessing Trinity assembly
