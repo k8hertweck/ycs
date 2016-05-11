@@ -2,8 +2,8 @@
 
 ## estimating read abundance from transcripts 
 
-#SBATCH -J ycsReadNorm	# Job name
-#SBATCH -o ycsReadNorm.%j.out	# Name of stdout output file (%j expands to jobId)
+#SBATCH -J ycsAbundance	# Job name
+#SBATCH -o ycsAbundance.%j.out	# Name of stdout output file (%j expands to jobId)
 #SBATCH -p normal	# Queue name
 #SBATCH -n 16	# Total number of  tasks requested
 #SBATCH -t 24:00:00	# Run time (hh:mm:ss) 
