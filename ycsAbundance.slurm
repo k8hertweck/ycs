@@ -12,7 +12,6 @@
 #SBATCH -A ycs	# Allocation name to charge job against
 
 module load perl intel/14.0.1.106 bowtie/1.1.1 samtools/0.1.19 trinityrnaseq
-module load express/1.3.0 gcc/4.9.1 gcc/4.9.3 kallisto/0.42.4
 
 DATA=/scratch/03177/hertweck/ycs
 
@@ -21,18 +20,34 @@ cd $DATA/trimKate
 gunzip MkCM4St1-51_1paired.fq.gz MkCM4St1-51_2paired.fq.gz
 
 # alignment based estimation method
+module load express/1.3.0
 perl $TACC_TRINITY_DIR/util/align_and_estimate_abundance.pl \
-	--transcripts Trinity.fasta --seqType fq \
+	--transcripts trinity_out_dir/Trinity.fasta --seqType fq \
 	--left MkCM4St1-51_1paired.fq --right MkCM4St1-51_2paired.fq \
 	--output_dir MkCM4St1-51abunAlign \
 	--est_method eXpress --aln_method bowtie \
 	--thread_count 16 --trinity_mode --prep_reference
+perl $TACC_TRINITY_DIR/util/align_and_estimate_abundance.pl \
+        --transcripts trinity_out_dir/Trinity.fasta --seqType fq \
+        --left $DATA/FV6Mktrim/MkYM4St1-41_1paired.fq \
+	--right $DATA/FV6Mktrim/MkYM4St1-41_2paired.fq \
+        --output_dir MkYM4St1-41abunAlign \
+        --est_method eXpress --aln_method bowtie \
+        --thread_count 16 --trinity_mode
 
 # alignment free estimating method
+module load gcc/4.9.1 hdf5/1.8.16 zlib/1.2.8 kallisto/0.42.4
 perl $TACC_TRINITY_DIR/util/align_and_estimate_abundance.pl \
-        --transcripts Trinity.fasta --seqType fq \
+        --transcripts trinity_out_dir/Trinity.fasta --seqType fq \
         --left MkCM4St1-51_1paired.fq --right MkCM4St1-51_2paired.fq \
         --output_dir MkCM4St1-51abunNoAlign \
 	--est_method kallisto \
-	--thread_count 16 --trinity_mode --prep_reference 
+	--thread_count 16 --trinity_mode --prep_reference
+perl $TACC_TRINITY_DIR/util/align_and_estimate_abundance.pl \
+        --transcripts trinity_out_dir/Trinity.fasta --seqType fq \
+        --left $DATA/FV6Mktrim/MkYM4St1-41_1paired.fq \
+        --right $DATA/FV6Mktrim/MkYM4St1-41_2paired.fq \
+        --output_dir MkYM4St1-41abunNoAlign \
+        --est_method kallisto \
+        --thread_count 16 --trinity_mode
 
