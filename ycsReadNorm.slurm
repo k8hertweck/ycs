@@ -15,15 +15,15 @@ module load perl intel/14.0.1.106 bowtie/1.1.1 samtools/0.1.19 trinityrnaseq
 
 DATA=/scratch/03177/hertweck/ycs
 
-cd $DATA/FV6Mktrim
+cd $DATA/"$1"trim
 
 # make list of read files
-awk '{print $0 "_1paired.fq"}' ../FV6Mk.lst > FV6Mkleft.lst
-awk '{print $0 "_2paired.fq"}' ../FV6Mk.lst > FV6Mkright.lst
+awk '{print $0 "_1paired.fq"}' ../$1.lst > "$1"left.lst
+awk '{print $0 "_2paired.fq"}' ../$1.lst > "$1"right.lst
 
 gunzip *1paired.fq.gz *2paired.fq.gz
 perl $TACC_TRINITY_DIR/util/insilico_read_normalization.pl --seqType fq --JM 500G --CPU 16 \
 	--max_cov 30 \
-	--left_list FV6Mkleft.lst \
-	--right_list FV6Mkright.lst
+	--left_list "$1"left.lst \
+	--right_list "$1"right.lst
 
