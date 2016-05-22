@@ -25,5 +25,6 @@ gunzip *1paired.fq.gz *2paired.fq.gz
 perl $TACC_TRINITY_DIR/util/insilico_read_normalization.pl --seqType fq --JM 500G --CPU 16 \
 	--max_cov 30 \
 	--left_list "$1"left.lst \
-	--right_list "$1"right.lst
+	--right_list "$1"right.lst \
+	--pairs_together --PARALLEL_STATS 
 
