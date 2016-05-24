@@ -11,9 +11,14 @@
 #SBATCH --mail-type=ALL	# when to notify email
 #SBATCH -A ycs	# Allocation name to charge job against
 
-module load soapdenovo/r240 
+module load soapdenovo2/r240 
 
 cd /scratch/03177/hertweck/ycs/trimKate
+mkdir soap2
+cd soap2
 
-SOAPdenovo-127mer all -s soap.config -o soap2 -K 63
+for x in 17 27 37 47 57 67
+	do
+		SOAPdenovo-127mer all -s soap.config -o soap2"$x" -K $x -L 200
+done
 

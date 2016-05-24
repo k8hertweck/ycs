@@ -11,9 +11,14 @@
 #SBATCH --mail-type=ALL	# when to notify email
 #SBATCH -A ycs	# Allocation name to charge job against
 
-module load soaptrans/1.01 
+SOAP=/work/03177/hertweck/myapps/soaptrans
 
 cd /scratch/03177/hertweck/ycs/trimKate
+mkdir soapTrans
+cd soapTrans
 
-SOAPdenovo-Trans-127mer all -s soap.config -o soapTrans -K 63
+for x in 17 27 37 47 57 67
+	do
+		$SOAP/SOAPdenovo-Trans-127mer all -s soap.config -o soapTrans"$x" -K $x -L 200
+done
 
