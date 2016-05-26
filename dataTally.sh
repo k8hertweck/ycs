@@ -5,16 +5,18 @@ TRIM=/scratch/03177/hertweck/ycs/trimReads.txt
 RAWSIZE=/scratch/03177/hertweck/ycs/rawSize.txt
 TRIMSIZE=/scratch/03177/hertweck/ycs/trimSize.txt
 NORM=/scratch/03177/hertweck/ycs/normSize.txt
+NORMREAD=/scratch/03177/hertweck/ycs/normReads.txt
 
 # raw sequences
 echo "Raw sequences" > $RAW
-for x in FV3 FV4 FV6B FV6H FV6Mk FV9master
+for x in FV3 FV4 FV6B FV6H FV6Mk FV9alone
 	do
 		cd $x
 		echo $x >> $RAW
 		grep "Total Sequences" */fastqc_data.txt >> $RAW
 		cd ..
 done
+# remove extra FV9, copy missing paired files
 #awk {'print $3}' $RAW | sed s/G// | awk '{sum+=$1} END {print sum}'
 
 # trimmed sequences
@@ -28,7 +30,7 @@ done
 
 # raw file size
 echo "Raw file size" > $RAWSIZE
-for x in FV3 FV4 FV6B FV6H FV6Mk FV9master
+for x in FV3 FV4 FV6B FV6H FV6Mk FV9alone
         do
 		echo $x >> $RAWSIZE
                 ls -lh $x/*.fastq.gz >> $RAWSIZE
@@ -44,12 +46,22 @@ for x in FV3trim FV4trim FV6Btrim FV6Htrim FV6Mktrim FV9mastertrim
 done
 #awk {'print $5}' $TRIMSIZE | sed s/G// | awk '{sum+=$1} END {print sum}'
 
+# normalized number of sequences
+echo "Normalized reads" >  $NORMREAD
+for x in FV3trim FV4trim FV6Btrim FV6Htrim FV6Mktrim FV9mastertrim
+        do
+                echo $x >> $NORMREAD
+                grep "+" $x/*norm.fq | wc -l >> $NORMREAD
+done
+#awk '{sum+=$1} END {print sum}' $NORMREAD
+
 # normalized file size
 echo "Normalized read file size" > $NORM
 for x in FV3trim FV4trim FV6Btrim FV6Htrim FV6Mktrim FV9mastertrim
         do
                 echo $x >> $NORM
-		ls -lh $x/*.ext_all_reads.normalized_K25_C30_pctSD200.fq >> $NORM
+		ls -lh $x/*ext_all_reads.normalized_K25_C30_pctSD200.fq >> $NORM
 done
 #awk {'print $5}' $NORM | sed s/G// | awk '{sum+=$1} END {print sum}'
+
 
