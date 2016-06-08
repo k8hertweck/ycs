@@ -4,7 +4,7 @@
 
 #SBATCH -J ycsSoap2	# Job name
 #SBATCH -o ycsSoap2.%j.out	# Name of stdout output file (%j expands to jobId)
-#SBATCH -p normal	# Queue name
+#SBATCH -p largemem	# Queue name
 #SBATCH -n 16	# Total number of  tasks requested
 #SBATCH -t 48:00:00	# Run time (hh:mm:ss) 
 #SBATCH --mail-user k8hertweck@gmail.com	# email to notify	
@@ -13,12 +13,11 @@
 
 module load soapdenovo2/r240 
 
-cd /scratch/03177/hertweck/ycs/trimKate
+cd /scratch/03177/hertweck/ycs/master
 mkdir soap2
-cd soap2
 
 for x in 17 27 37 47 57 67
 	do
-		SOAPdenovo-127mer all -s soap.config -o soap2"$x" -K $x -L 200
+		SOAPdenovo-127mer all -s soap.config -o soap2/soap2"$x" -K $x -L 200
 done
 
