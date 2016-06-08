@@ -13,14 +13,9 @@
 
 module load velvet/1.2.08 oases/0.2.08 python/2.7.9
 
-cd /scratch/03177/hertweck/ycs/trimKate
+cd /scratch/03177/hertweck/ycs/master
 
-#velveth velvet 63 -shortPaired -separate -fastq MkCM4St1-51_1paired.fq MkCM4St1-51_2paired.fq  
-#velvetg velvet -cov_cutoff auto -exp_cov auto
-
-#oases /scratch/03177/hertweck/ycs/trimKate/velvet
-
-python $TACC_OASES_DIR/scripts/oases_pipeline.py -m 17 -M 35 -s 10 -o oases --clean
--d ' -shortPaired -separate -fastq left.norm.fq right.norm.fq '
--p ' -min_trans_lgth 200 '
+python $TACC_OASES_DIR/scripts/oases_pipeline.py -m 43 -M 63 -o oases --clean \
+ -d ' -shortPaired -separate -fastq left.norm.fq right.norm.fq ' \
+ -p ' -ins_length 250 -min_trans_lgth 200 -scaffolding no' 
 
