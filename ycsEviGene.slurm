@@ -18,9 +18,10 @@ export fastanrdb=/work/03177/hertweck/myapps/exonerate-2.2.0/src/util/fastanrdb
 
 cd /scratch/03177/hertweck/ycs/master
 
-mkdir combine
+mkdir combine combineAll
 
 cat oasesMerged/transcripts.fa soap2/soap2*.scafSeq soapTrans/soapTrans*.scafSeq > combine/oasesSoaps.fasta
+cat oasesMerged/transcripts.fa soap2/soap2*.scafSeq soapTrans/soapTrans*.scafSeq trinity_out_dir/Trinity.fasta > combineAll/oasesSoapsTrinity.fasta
 
 cd combine
 
@@ -29,3 +30,11 @@ $EVIGENE/scripts/rnaseq/trformat.pl -output oasesSoaps.tr -input oasesSoaps.fast
 
 # run pipeline
 $EVIGENE/scripts/prot/tr2aacds.pl -mrnaseq oasesSoaps.tr -NCPU 16 -MAXMEM 3000 -logfile
+
+cd ../combineAll
+
+#regularize IDs
+$EVIGENE/scripts/rnaseq/trformat.pl -output oasesSoapsTrinity.tr -input oasesSoapsTrinity.fasta
+
+# run pipeline
+$EVIGENE/scripts/prot/tr2aacds.pl -mrnaseq oasesSoapsTrinity.tr -NCPU 16 -MAXMEM 3000 -logfile
