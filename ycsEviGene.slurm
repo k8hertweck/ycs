@@ -20,7 +20,9 @@ cd /scratch/03177/hertweck/ycs/master
 
 mkdir combine combineAll
 
+# create combined oases/soap2/soapTrans
 cat oasesMerged/transcripts.fa soap2/soap2*.scafSeq soapTrans/soapTrans*.scafSeq > combine/oasesSoaps.fasta
+# create combined oases/soap2/soapTrans/Trinity
 cat oasesMerged/transcripts.fa soap2/soap2*.scafSeq soapTrans/soapTrans*.scafSeq trinity_out_dir/Trinity.fasta > combineAll/oasesSoapsTrinity.fasta
 
 cd combine
