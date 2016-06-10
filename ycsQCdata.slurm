@@ -17,23 +17,23 @@ TRIM=/work/03177/hertweck/myapps/Trimmomatic-0.36
 
 cd /scratch/03177/hertweck/ycs/$1
 
-ls | sed 's/_[1-2]\.fastq\.gz//' > ../$1.lst
+#ls | sed 's/_[1-2]\.fastq\.gz//' | uniq > ../$1.lst
+
+echo "$1"
 
 # QC of raw files
 fastqc *.fastq.gz
 
-mkdir "$1"trim
-
 ## loop across all data files in set
-
+mkdir ../"$1"trim
 for x in `cat /scratch/03177/hertweck/ycs/$1.lst`
 	do
 		# quality trimming 
-			java -jar $TRIM/trimmomatic-0.36.jar PE -threads 16 -phred33 \
-				"$x"_1.fastq.gz "$x"_2.fastq.gz \
-				../"$1"trim/"$x"_1paired.fq.gz ../"$1"trim/"$x"_1unpaired.fq.gz \
-				../"$1"trim/"$x"_2paired.fq.gz ../"$1"trim/"$x"_2unpaired.fq.gz \
-				ILLUMINACLIP:$TRIM/adapters/TruSeq3-PE.fa:2:30:10 SLIDINGWINDOW:4:20 LEADING:15 TRAILING:15  MINLEN:50
+		java -jar $TRIM/trimmomatic-0.36.jar PE -threads 16 -phred33 \
+			"$x"_1.fastq.gz "$x"_2.fastq.gz \
+			../"$1"trim/"$x"_1paired.fq.gz ../"$1"trim/"$x"_1unpaired.fq.gz \
+			../"$1"trim/"$x"_2paired.fq.gz ../"$1"trim/"$x"_2unpaired.fq.gz \
+			ILLUMINACLIP:$TRIM/adapters/TruSeq3-PE.fa:2:30:10 SLIDINGWINDOW:4:20 LEADING:15 TRAILING:15  MINLEN:50
 done
 
 # reassess trimmed files
