@@ -41,9 +41,10 @@ cd $data
 
 ## Trinity
 mkdir trinity_out_dir/combine
+cp trinity_out_dir/Trinity.fasta trinity_out_dir/combine/Trinity.tr
 cd trinity_out_dir/combine
 # run pipeline
-$EVIGENE/scripts/prot/tr2aacds.pl -mrnaseq ../Trinity.fasta -NCPU 16 -MAXMEM 3000 -logfile
+$EVIGENE/scripts/prot/tr2aacds.pl -mrnaseq ../Trinity.tr -NCPU 16 -MAXMEM 3000 -logfile
 cd $data
 
 ## oases/soapTrans
