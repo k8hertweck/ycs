@@ -39,12 +39,20 @@ $EVIGENE/scripts/rnaseq/trformat.pl -output soapTrans.tr -input soapTrans.fasta
 $EVIGENE/scripts/prot/tr2aacds.pl -mrnaseq soapTrans.tr -NCPU 16 -MAXMEM 3000 -logfile
 cd $data
 
+## Velvet/Oases
+mkdir oasesMerged/combine
+cp oasesMerged/transcripts.fa oasesMerged/combine/transcripts.tr
+cd oasesMerged/combine
+# run pipeline
+$EVIGENE/scripts/prot/tr2aacds.pl -mrnaseq transcripts.tr -NCPU 16 -MAXMEM 3000 -logfile
+cd $data
+
 ## Trinity
 mkdir trinity_out_dir/combine
 cp trinity_out_dir/Trinity.fasta trinity_out_dir/combine/Trinity.tr
 cd trinity_out_dir/combine
 # run pipeline
-$EVIGENE/scripts/prot/tr2aacds.pl -mrnaseq ../Trinity.tr -NCPU 16 -MAXMEM 3000 -logfile
+$EVIGENE/scripts/prot/tr2aacds.pl -mrnaseq Trinity.tr -NCPU 16 -MAXMEM 3000 -logfile
 cd $data
 
 ## oases/soapTrans
