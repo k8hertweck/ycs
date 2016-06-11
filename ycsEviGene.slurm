@@ -4,9 +4,9 @@
 
 #SBATCH -J ycsEviGene	# Job name
 #SBATCH -o ycsEviGene.%j.out	# Name of stdout output file (%j expands to jobId)
-#SBATCH -p normal	# Queue name
+#SBATCH -p development	# Queue name
 #SBATCH -n 16	# Total number of  tasks requested
-#SBATCH -t 24:00:00	# Run time (hh:mm:ss) 
+#SBATCH -t 2:00:00	# Run time (hh:mm:ss) 
 #SBATCH --mail-user k8hertweck@gmail.com	# email to notify	
 #SBATCH --mail-type=ALL	# when to notify email
 #SBATCH -A ycs	# Allocation name to charge job against
@@ -18,35 +18,58 @@ export fastanrdb=/work/03177/hertweck/myapps/exonerate-2.2.0/src/util/fastanrdb
 
 cd /scratch/03177/hertweck/ycs/master
 
-mkdir combine combine2 combineAll
-
-# create combined oases/soap2/soapTrans
-cat oasesMerged/transcripts.fa soap2/soap2*.scafSeq soapTrans/soapTrans*.scafSeq > combine/oasesSoaps.fasta
-# create combined oases/soapTrans
-cat oasesMerged/transcripts.fa soapTrans/soapTrans*.scafSeq > combine2/oasesSoap.fasta
-# create combined oases/soap2/soapTrans/Trinity
-cat oasesMerged/transcripts.fa soap2/soap2*.scafSeq soapTrans/soapTrans*.scafSeq trinity_out_dir/Trinity.fasta > combineAll/oasesSoapsTrinity.fasta
-
-cd combine
-
+## soap2
+mkdir soap2/combine
+cat soap2/soap2*.scafSeq > soap2/combine/soap2.fasta
+cd soap2/combine
 #regularize IDs
-$EVIGENE/scripts/rnaseq/trformat.pl -output oasesSoaps.tr -input oasesSoaps.fasta
-
+$EVIGENE/scripts/rnaseq/trformat.pl -output soap2.tr -input soap2.fasta
 # run pipeline
-$EVIGENE/scripts/prot/tr2aacds.pl -mrnaseq oasesSoaps.tr -NCPU 16 -MAXMEM 3000 -logfile
+$EVIGENE/scripts/prot/tr2aacds.pl -mrnaseq soap2.tr -NCPU 16 -MAXMEM 3000 -logfile
+cd ../
 
-cd ../combine2
-
+## soapTrans
+mkdir soapTrans/combine
+cat soapTrans/soapTrans*.scafSeq > soapTrans/combine/soapTrans.fasta
+cd soapTrans/combine
 #regularize IDs
-$EVIGENE/scripts/rnaseq/trformat.pl -output oasesSoap.tr -input oasesSoaps.fasta
-
+$EVIGENE/scripts/rnaseq/trformat.pl -output soapTrans.tr -input soapTrans.fasta
 # run pipeline
-$EVIGENE/scripts/prot/tr2aacds.pl -mrnaseq oasesSoap.tr -NCPU 16 -MAXMEM 3000 -logfile
+$EVIGENE/scripts/prot/tr2aacds.pl -mrnaseq soapTrans.tr -NCPU 16 -MAXMEM 3000 -logfile
+cd ../
 
-cd ../combineAll
+## Trinity
+mkdir trinity_out_dir/combine
+cd trinity_out_dir/combine
+# run pipeline
+$EVIGENE/scripts/prot/tr2aacds.pl -mrnaseq ../Trinity.fasta -NCPU 16 -MAXMEM 3000 -logfile
+cd ../
 
+## oases/soapTrans
+mkdir combineOS2
+cat oasesMerged/transcripts.fa soapTrans/soapTrans*.scafSeq > combineOS2/OS2.fasta
+cd combineOS2
 #regularize IDs
-$EVIGENE/scripts/rnaseq/trformat.pl -output oasesSoapsTrinity.tr -input oasesSoapsTrinity.fasta
-
+$EVIGENE/scripts/rnaseq/trformat.pl -output OS2.tr -input OS2.fasta
 # run pipeline
-$EVIGENE/scripts/prot/tr2aacds.pl -mrnaseq oasesSoapsTrinity.tr -NCPU 16 -MAXMEM 3000 -logfile
+$EVIGENE/scripts/prot/tr2aacds.pl -mrnaseq OS2.tr -NCPU 16 -MAXMEM 3000 -logfile
+cd ../
+
+## oases/soap2/soapTrans
+mkdir combineOSS
+cat oasesMerged/transcripts.fa soap2/soap2*.scafSeq soapTrans/soapTrans*.scafSeq > combineOSS/OSS.fasta
+cd combineOSS
+#regularize IDs
+$EVIGENE/scripts/rnaseq/trformat.pl -output OSS.tr -input OSS.fasta
+# run pipeline
+$EVIGENE/scripts/prot/tr2aacds.pl -mrnaseq OSS.tr -NCPU 16 -MAXMEM 3000 -logfile
+cd ../
+
+## oases/soap2/soapTrans/Trinity
+mkdir combineAll
+cat oasesMerged/transcripts.fa soap2/soap2*.scafSeq soapTrans/soapTrans*.scafSeq trinity_out_dir/Trinity.fasta > combineAll/all.fasta
+cd combineAll
+#regularize IDs
+$EVIGENE/scripts/rnaseq/trformat.pl -output all.tr -input all.fasta
+# run pipeline
+$EVIGENE/scripts/prot/tr2aacds.pl -mrnaseq all.tr -NCPU 16 -MAXMEM 3000 -logfile
