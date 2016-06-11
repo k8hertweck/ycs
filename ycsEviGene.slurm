@@ -16,7 +16,8 @@ module load perl blast/2.2.29 cd-hit/4.6.4
 EVIGENE=/work/03177/hertweck/myapps/evigene
 export fastanrdb=/work/03177/hertweck/myapps/exonerate-2.2.0/src/util/fastanrdb
 
-cd /scratch/03177/hertweck/ycs/master
+data=/scratch/03177/hertweck/ycs/master
+cd $data
 
 ## soap2
 mkdir soap2/combine
@@ -26,7 +27,7 @@ cd soap2/combine
 $EVIGENE/scripts/rnaseq/trformat.pl -output soap2.tr -input soap2.fasta
 # run pipeline
 $EVIGENE/scripts/prot/tr2aacds.pl -mrnaseq soap2.tr -NCPU 16 -MAXMEM 3000 -logfile
-cd ../
+cd $data
 
 ## soapTrans
 mkdir soapTrans/combine
@@ -36,14 +37,14 @@ cd soapTrans/combine
 $EVIGENE/scripts/rnaseq/trformat.pl -output soapTrans.tr -input soapTrans.fasta
 # run pipeline
 $EVIGENE/scripts/prot/tr2aacds.pl -mrnaseq soapTrans.tr -NCPU 16 -MAXMEM 3000 -logfile
-cd ../
+cd $data
 
 ## Trinity
 mkdir trinity_out_dir/combine
 cd trinity_out_dir/combine
 # run pipeline
 $EVIGENE/scripts/prot/tr2aacds.pl -mrnaseq ../Trinity.fasta -NCPU 16 -MAXMEM 3000 -logfile
-cd ../
+cd $data
 
 ## oases/soapTrans
 mkdir combineOS2
@@ -53,7 +54,7 @@ cd combineOS2
 $EVIGENE/scripts/rnaseq/trformat.pl -output OS2.tr -input OS2.fasta
 # run pipeline
 $EVIGENE/scripts/prot/tr2aacds.pl -mrnaseq OS2.tr -NCPU 16 -MAXMEM 3000 -logfile
-cd ../
+cd $data
 
 ## oases/soap2/soapTrans
 mkdir combineOSS
@@ -63,7 +64,7 @@ cd combineOSS
 $EVIGENE/scripts/rnaseq/trformat.pl -output OSS.tr -input OSS.fasta
 # run pipeline
 $EVIGENE/scripts/prot/tr2aacds.pl -mrnaseq OSS.tr -NCPU 16 -MAXMEM 3000 -logfile
-cd ../
+cd $data
 
 ## oases/soap2/soapTrans/Trinity
 mkdir combineAll
