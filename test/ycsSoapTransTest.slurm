@@ -15,4 +15,4 @@ SOAP=/work/03177/hertweck/myapps/soaptrans
 
 cd /scratch/03177/hertweck/ycs/master/soapTest
 
-$SOAP/SOAPdenovo-Trans-127mer scaff -g soapTrans67 -F NO -L 200
+$SOAP/SOAPdenovo-Trans-127mer scaff -g soapTrans67 -F YES -L 200
