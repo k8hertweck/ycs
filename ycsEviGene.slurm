@@ -24,8 +24,8 @@ echo "soap2"
 mkdir soap2/combine
 cat soap2/soap2*.scafSeq > soap2/combine/soap2.fasta
 cd soap2/combine
-# regularize IDs
-$EVIGENE/scripts/rnaseq/trformat.pl -output soap2.tr -input soap2/soap2*.scafSeq
+# create unique IDs 
+awk '{if ($1 ~ />/) print $0,NR; else print $0}' soap2.fasta > soap2.tr
 # run pipeline
 $EVIGENE/scripts/prot/tr2aacds.pl -mrnaseq soap2.tr -NCPU 16 -MAXMEM 10000 -logfile
 # cd-hit only
@@ -38,8 +38,8 @@ echo "soapTrans"
 mkdir soapTrans/combine
 cat soapTrans/soapTrans*.scafSeq > soapTrans/combine/soapTrans.fasta
 cd soapTrans/combine
-# regularize IDs
-$EVIGENE/scripts/rnaseq/trformat.pl -output soapTrans.tr -input soapTrans.fasta
+# create unique IDs 
+awk '{if ($1 ~ />/) print $0,NR; else print $0}' soapTrans.fasta > soapTrans.tr
 # run pipeline
 $EVIGENE/scripts/prot/tr2aacds.pl -mrnaseq soapTrans.tr -NCPU 16 -MAXMEM 10000 -logfile
 # cd-hit only
@@ -76,8 +76,8 @@ echo "oases/soap2/soapTrans/Trinity: combineAll"
 mkdir combineAll
 cat oasesMerged/transcripts.fa soap2/soap2*.scafSeq soapTrans/soapTrans*.scafSeq trinity_out_dir/Trinity.fasta > combineAll/all.fasta
 cd combineAll
-# regularize IDs
-$EVIGENE/scripts/rnaseq/trformat.pl -output all.tr -input all.fasta
+# create unique IDs 
+awk '{if ($1 ~ />/) print $0,NR; else print $0}' all.fasta > all.tr
 # run pipeline
 $EVIGENE/scripts/prot/tr2aacds.pl -mrnaseq all.tr -NCPU 16 -MAXMEM 10000 -logfile
 # cd-hit only
