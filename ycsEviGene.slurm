@@ -59,28 +59,6 @@ cd trinity_out_dir/combine
 $EVIGENE/scripts/prot/tr2aacds.pl -mrnaseq Trinity.tr -NCPU 16 -MAXMEM 10000 -logfile
 cd $data
 
-## oases/soapTrans
-echo "oases/soapTrans: combine OS2"
-mkdir combineOS2
-cat oasesMerged/transcripts.fa soapTrans/soapTrans*.scafSeq > combineOS2/OS2.fasta
-cd combineOS2
-# regularize IDs
-$EVIGENE/scripts/rnaseq/trformat.pl -output OS2.tr -input OS2.fasta
-# run pipeline
-$EVIGENE/scripts/prot/tr2aacds.pl -mrnaseq OS2.tr -NCPU 16 -MAXMEM 10000 -logfile
-cd $data
-
-## oases/soap2/soapTrans
-echo "oases/soap2/soapTrans: combineOSS"
-mkdir combineOSS
-cat oasesMerged/transcripts.fa soap2/soap2*.scafSeq soapTrans/soapTrans*.scafSeq > combineOSS/OSS.fasta
-cd combineOSS
-# regularize IDs
-$EVIGENE/scripts/rnaseq/trformat.pl -output OSS.tr -input OSS.fasta
-# run pipeline
-$EVIGENE/scripts/prot/tr2aacds.pl -mrnaseq OSS.tr -NCPU 16 -MAXMEM 10000 -logfile
-cd $data
-
 ## oases/soap2/soapTrans/Trinity
 echo "oases/soap2/soapTrans/Trinity: combineAll"
 mkdir combineAll
