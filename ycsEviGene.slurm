@@ -30,7 +30,7 @@ awk '{if ($1 ~ />/) print $0,NR; else print $0}' soap2.fasta > soap2.tr
 $EVIGENE/scripts/prot/tr2aacds.pl -mrnaseq soap2.tr -NCPU 16 -MAXMEM 10000 -logfile
 # cd-hit only
 fastanrdb soap2.fasta > soap2cut.fasta
-cd-hit -i soap2cut.fasta -o soap2CDHIT.fasta -c 0.9 -M 5000 -T 0
+cd-hit -i soap2cut.fasta -o soap2CDHIT.fasta -c 0.9 -M 10000 -T 0
 cd $data
 
 ## soapTrans
@@ -44,7 +44,7 @@ awk '{if ($1 ~ />/) print $0,NR; else print $0}' soapTrans.fasta > soapTrans.tr
 $EVIGENE/scripts/prot/tr2aacds.pl -mrnaseq soapTrans.tr -NCPU 16 -MAXMEM 10000 -logfile
 # cd-hit only
 fastanrdb soapTrans.fasta > soapTransCut.fasta
-cd-hit -i soapTransCut.fasta -o soapTransCDHIT.fasta -c 0.9 -M 5000 -T 0
+cd-hit -i soapTransCut.fasta -o soapTransCDHIT.fasta -c 0.9 -M 10000 -T 0
 cd $data
 
 ## Velvet/Oases
@@ -56,7 +56,7 @@ cd oasesMerged/combine
 $EVIGENE/scripts/prot/tr2aacds.pl -mrnaseq transcripts.tr -NCPU 16 -MAXMEM 10000 -logfile
 # cd-hit only
 fastanrdb transcripts.tr > transcriptsCut.fasta
-cd-hit -i transcriptsCut.fasta -o transcriptsCDHIT.fasta -c 0.9 -M 5000 -T 0
+cd-hit -i transcriptsCut.fasta -o transcriptsCDHIT.fasta -c 0.9 -M 10000 -T 0
 cd $data
 
 ## Trinity
@@ -68,7 +68,7 @@ cd trinity_out_dir/combine
 $EVIGENE/scripts/prot/tr2aacds.pl -mrnaseq Trinity.tr -NCPU 16 -MAXMEM 10000 -logfile
 # cd-hit only
 fastanrdb Trinity.tr > TrinityCut.tr
-cd-hit -i TrinityCut.tr -o TrinityCDHIT.fasta -c 0.9 -M 5000 -T 0
+cd-hit -i TrinityCut.tr -o TrinityCDHIT.fasta -c 0.9 -M 10000 -T 0
 cd $data
 
 ## oases/soap2/soapTrans/Trinity
@@ -82,4 +82,4 @@ awk '{if ($1 ~ />/) print $0,NR; else print $0}' all.fasta > all.tr
 $EVIGENE/scripts/prot/tr2aacds.pl -mrnaseq all.tr -NCPU 16 -MAXMEM 10000 -logfile
 # cd-hit only
 fastanrdb all.tr > allCut.tr
-cd-hit -i allCut.tr -o allCDHIT.fasta -c 0.9 -M 5000 -T 0
+cd-hit -i allCut.tr -o allCDHIT.fasta -c 0.9 -M 10000 -T 0
