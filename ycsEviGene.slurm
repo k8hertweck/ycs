@@ -25,9 +25,12 @@ mkdir soap2/combine
 cat soap2/soap2*.scafSeq > soap2/combine/soap2.fasta
 cd soap2/combine
 # regularize IDs
-$EVIGENE/scripts/rnaseq/trformat.pl -output soap2.tr -input soap2.fasta
+$EVIGENE/scripts/rnaseq/trformat.pl -output soap2.tr -input soap2/soap2*.scafSeq
 # run pipeline
 $EVIGENE/scripts/prot/tr2aacds.pl -mrnaseq soap2.tr -NCPU 16 -MAXMEM 10000 -logfile
+# cd-hit only
+fastanrdb soap2.fasta > soap2cut.fasta
+cd-hit -i soap2cut.fasta -o soap2CDHIT.fasta -c 0.9 -M 5000 -T 0
 cd $data
 
 ## soapTrans
@@ -39,6 +42,9 @@ cd soapTrans/combine
 $EVIGENE/scripts/rnaseq/trformat.pl -output soapTrans.tr -input soapTrans.fasta
 # run pipeline
 $EVIGENE/scripts/prot/tr2aacds.pl -mrnaseq soapTrans.tr -NCPU 16 -MAXMEM 10000 -logfile
+# cd-hit only
+fastanrdb soapTrans.fasta > soapTransCut.fasta
+cd-hit -i soapTransCut.fasta -o soapTransCDHIT.fasta -c 0.9 -M 5000 -T 0
 cd $data
 
 ## Velvet/Oases
@@ -48,6 +54,9 @@ cp oasesMerged/transcripts.fa oasesMerged/combine/transcripts.tr
 cd oasesMerged/combine
 # run pipeline
 $EVIGENE/scripts/prot/tr2aacds.pl -mrnaseq transcripts.tr -NCPU 16 -MAXMEM 10000 -logfile
+# cd-hit only
+fastanrdb transcripts.tr > transcriptsCut.fasta
+cd-hit -i transcriptsCut.fasta -o transcriptsCDHIT.fasta -c 0.9 -M 5000 -T 0
 cd $data
 
 ## Trinity
@@ -57,6 +66,9 @@ cp trinity_out_dir/Trinity.fasta trinity_out_dir/combine/Trinity.tr
 cd trinity_out_dir/combine
 # run pipeline
 $EVIGENE/scripts/prot/tr2aacds.pl -mrnaseq Trinity.tr -NCPU 16 -MAXMEM 10000 -logfile
+# cd-hit only
+fastanrdb Trinity.tr > TrinityCut.tr
+cd-hit -i TrinityCut.tr -o TrinityCDHIT.fasta -c 0.9 -M 5000 -T 0
 cd $data
 
 ## oases/soap2/soapTrans/Trinity
@@ -68,3 +80,6 @@ cd combineAll
 $EVIGENE/scripts/rnaseq/trformat.pl -output all.tr -input all.fasta
 # run pipeline
 $EVIGENE/scripts/prot/tr2aacds.pl -mrnaseq all.tr -NCPU 16 -MAXMEM 10000 -logfile
+# cd-hit only
+fastanrdb all.tr > allCut.tr
+cd-hit -i allCut.tr -o allCDHIT.fasta -c 0.9 -M 5000 -T 0
