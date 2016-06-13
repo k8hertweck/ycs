@@ -4,9 +4,9 @@
 
 #SBATCH -J ycsEviGene	# Job name
 #SBATCH -o ycsEviGene.%j.out	# Name of stdout output file (%j expands to jobId)
-#SBATCH -p largemem	# Queue name
+#SBATCH -p normal	# Queue name
 #SBATCH -n 16	# Total number of  tasks requested
-#SBATCH -t 12:00:00	# Run time (hh:mm:ss) 
+#SBATCH -t 24:00:00	# Run time (hh:mm:ss) 
 #SBATCH --mail-user k8hertweck@gmail.com	# email to notify	
 #SBATCH --mail-type=ALL	# when to notify email
 #SBATCH -A ycs	# Allocation name to charge job against
@@ -74,13 +74,15 @@ cd $data
 ## oases/soap2/soapTrans/Trinity
 echo "oases/soap2/soapTrans/Trinity: combineAll"
 mkdir combineAll
-cat oasesMerged/transcripts.fa soap2/soap2*.scafSeq soapTrans/soapTrans*.scafSeq trinity_out_dir/Trinity.fasta > combineAll/all.fasta
+cat oasesMerged/transcripts.fa soap2/soap2*.scafSeq soapTrans/soapTrans*.scafSeq trinity_out_dir/Trinity.fasta > combineAll/all0.fasta
 cd combineAll
 # create unique IDs 
+sed s/Confidence_0.000_Length_// all0.fasta > all.fasta
+rm all0.fasta
 awk 'BEGIN{FS=" "} {if ($1 ~ />/) print $1"."NR; else print $0}' all.fasta > all.tr
 # run pipeline
-$EVIGENE/scripts/prot/tr2aacds.pl -mrnaseq all.tr -NCPU 16 -MAXMEM 10000 -logfile
+$EVIGENE/scripts/prot/tr2aacds.pl -mrnaseq all.tr -NCPU 16 -MAXMEM 30000 -logfile
 # cd-hit only
 $fastanrdb all.tr > allCut.tr
-cd-hit -i allCut.tr -o allCDHIT.fasta -c 0.9 -M 10000 -T 0
+cd-hit -i allCut.tr -o allCDHIT.fasta -c 0.9 -M 30000 -T 16
 
