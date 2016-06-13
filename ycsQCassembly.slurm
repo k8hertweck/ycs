@@ -28,31 +28,3 @@ $TACC_TRINITY_DIR/util/SAM_nameSorted_to_uniq_count_stats.pl \
 
 # transcriptome contig Nx statistic 
 $TACC_TRINITY_DIR/util/TrinityStats.pl Trinity.fasta > Nx.out
-
-## oases/soap2/soapTrans
-cd ../combine
-# read representation of assembly
-$TACC_TRINITY_DIR/util/bowtie_PE_separate_then_join.pl --seqType fq \
-	--left ../left.norm.fq --right ../right.norm.fq \
-        --target okayset/oasesSoaps.okay.tr --aligner bowtie \
-        -- -p 4 --all --best --strata -m 300 # bowtie parameters
-
-$TACC_TRINITY_DIR/util/SAM_nameSorted_to_uniq_count_stats.pl \
-	bowtie_out/bowtie_out.nameSorted.bam > mappedReads.out
-
-# transcriptome contig Nx statistic 
-$TACC_TRINITY_DIR/util/TrinityStats.pl okayset/oasesSoaps.okay.tr > Nx.out
-
-## oases/soap2/soapTrans/Trinity
-cd ../combineAll
-# read representation of assembly
-$TACC_TRINITY_DIR/util/bowtie_PE_separate_then_join.pl --seqType fq \
-	--left ../left.norm.fq --right ../right.norm.fq \
-        --target okayset/oasesSoapsTrinity.okay.tr --aligner bowtie \
-        -- -p 4 --all --best --strata -m 300 # bowtie parameters
-
-$TACC_TRINITY_DIR/util/SAM_nameSorted_to_uniq_count_stats.pl \
-	bowtie_out/bowtie_out.nameSorted.bam > mappedReads.out
-
-# transcriptome contig Nx statistic 
-$TACC_TRINITY_DIR/util/TrinityStats.pl okayset/oasesSoapsTrinity.okay.tr > Nx.out
