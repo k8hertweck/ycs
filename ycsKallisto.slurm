@@ -19,12 +19,12 @@ DATA=/Volumes/Seagate/SugarResearchAustraliaFV6/FV6H/trimmed
 cd ~/data/ycs/kallisto/Trinity
 
 ## kallisto: alignment-free estimation method 
-kallisto index -i TrinityEG Trinity.okayset.tr
+kallisto index -i TrinityEG ../../assemblies/Trinity.okayset.tr
 
 cp $DATA/FV6H.lst .
 
 for x in `cat FV6H.lst`
 	do
 		echo $x
-		kallisto quant -t 4 -i TrinityEG -o $x $DATA/"$x"_1paired.fq.gz $DATA/"$x"_2paired.fq.gz
+		kallisto quant -t 6 -b 100 -i TrinityEG -o $x $DATA/"$x"_1paired.fq.gz $DATA/"$x"_2paired.fq.gz
 done
