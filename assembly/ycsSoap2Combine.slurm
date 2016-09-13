@@ -4,7 +4,7 @@
 
 #SBATCH -J ycsSoap2	# Job name
 #SBATCH -o ycsSoap2.%j.out	# Name of stdout output file (%j expands to jobId)
-#SBATCH -p largemem	# Queue name
+#SBATCH -p normal	# Queue name
 #SBATCH -n 16	# Total number of  tasks requested
 #SBATCH -t 48:00:00	# Run time (hh:mm:ss) 
 #SBATCH --mail-user k8hertweck@gmail.com	# email to notify	
@@ -12,6 +12,9 @@
 #SBATCH -A ycs	# Allocation name to charge job against
 
 module load perl blast/2.2.29 cd-hit/4.6.4
+
+EVIGENE=/work/03177/hertweck/myapps/evigene
+export fastanrdb=/work/03177/hertweck/myapps/exonerate-2.2.0/src/util/fastanrdb
 
 cd /scratch/03177/hertweck/ycs/master
 
