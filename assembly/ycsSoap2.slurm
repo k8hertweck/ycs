@@ -16,14 +16,8 @@ module load soapdenovo2/r240
 cd /scratch/03177/hertweck/ycs/master
 mkdir soap2
 
-# short kmers
-for x in 17 27 37 47 57 67
-	do
-		SOAPdenovo-127mer all -s soap.config -o soap2/soap2"$x" -K $x -L 200
-done
-
-# long kmers
-for x in 77 87 97 107 127
+# SOAP2 de novo assembly
+for x in 17 27 37 47 57 67 77 87 97 107
 	do
 		SOAPdenovo-127mer all -s soap.config -o soap2/soap2"$x" -K $x -L 200
 done

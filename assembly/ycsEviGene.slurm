@@ -19,34 +19,6 @@ export fastanrdb=/work/03177/hertweck/myapps/exonerate-2.2.0/src/util/fastanrdb
 data=/scratch/03177/hertweck/ycs/master
 cd $data
 
-## soap2
-echo "soap2"
-mkdir soap2/combine
-cat soap2/soap2*.scafSeq > soap2/combine/soap2.fasta
-cd soap2/combine
-# create unique IDs 
-awk 'BEGIN{FS=" "} {if ($1 ~ />/) print $1"."NR; else print $0}' soap2.fasta > soap2.tr
-# run pipeline
-$EVIGENE/scripts/prot/tr2aacds.pl -mrnaseq soap2.tr -NCPU 16 -MAXMEM 10000 -logfile
-# cd-hit only
-$fastanrdb soap2.fasta > soap2cut.fasta
-cd-hit -i soap2cut.fasta -o soap2CDHIT.fasta -c 0.9 -M 10000 -T 0
-cd $data
-
-## soapTrans
-echo "soapTrans"
-mkdir soapTrans/combine
-cat soapTrans/soapTrans*.scafSeq > soapTrans/combine/soapTrans.fasta
-cd soapTrans/combine
-# create unique IDs 
-awk 'BEGIN{FS=" "} {if ($1 ~ />/) print $1"."NR; else print $0}' soapTrans.fasta > soapTrans.tr
-# run pipeline
-$EVIGENE/scripts/prot/tr2aacds.pl -mrnaseq soapTrans.tr -NCPU 16 -MAXMEM 10000 -logfile
-# cd-hit only
-$fastanrdb soapTrans.fasta > soapTransCut.fasta
-cd-hit -i soapTransCut.fasta -o soapTransCDHIT.fasta -c 0.9 -M 10000 -T 0
-cd $data
-
 ## Velvet/Oases
 echo "Velvet/Oases"
 mkdir oasesMerged/combine

@@ -16,15 +16,8 @@ SOAP=/work/03177/hertweck/myapps/soaptrans
 cd /scratch/03177/hertweck/ycs/master
 mkdir soapTrans
 
-# short kmers
-for x in 17 27 37 47 57 67
+# SOAP Trans assembly
+for x in 17 27 37 47 57 67 77 87 97 107
 	do
 		$SOAP/SOAPdenovo-Trans-127mer all -s soap.config -o soapTrans/soapTrans"$x" -K $x -L 200
 done
-
-# long kmers
-for x in 77 87 97 107 127
-	do
-		$SOAP/SOAPdenovo-Trans-127mer all -s soap.config -o soapTrans/soapTrans"$x" -K $x -L 200
-done
-
