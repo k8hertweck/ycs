@@ -1,4 +1,4 @@
-#! /usr/etc python
+#! /usr/bin python
 # need to change the above line to suit the path to python on your system
 
 # N50 code originally from Cara Magnabosco was modified by Kate Wathen-Dunn
@@ -61,13 +61,16 @@ index = len(n50)/2
 avg = []
 
 if index % 2 == 0:
-    first = n50[index-1]
-    second = n50[index]
+    index_int = int(index)
+    first = n50[index_int-1]
+    second = n50[index_int]
     avg.append(first)
     avg.append(second)
-    n50 = numpy.mean(avg)
-    print ("the N50 is : %d" % n50)
+    result = numpy.mean(avg)
+    print ("the N50 is : %d" % result)
 else:
-    print("the N50 is: %d" % n50[index-1])
+    index_int = int(index)
+    print("the N50 is: %d" % n50[index_int-1])
 
 input.close()
+
