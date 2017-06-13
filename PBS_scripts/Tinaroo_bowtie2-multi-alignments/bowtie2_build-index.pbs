@@ -1,0 +1,19 @@
+#!bin/bash
+
+#
+#PBS -N bowtie2index-build
+
+#PBS -A UQ-SCI-SCMB
+
+#PBS -l nodes=1:ppn=24:intel,mem=120Gb,walltime=72:00:00
+
+
+
+module load bowtie2
+
+cd /30days/s4439186/
+
+for F in `ls *.tr`;do
+	bowtie2-build --threads 24 /30days/s4439186/$F $F
+done
+ 
