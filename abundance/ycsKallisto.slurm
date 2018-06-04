@@ -28,3 +28,29 @@ for x in `cat FV6H.lst`
 		echo $x
 		kallisto quant -t 6 -b 100 -i TrinityEG -o $x $DATA/"$x"_1paired.fq.gz $DATA/"$x"_2paired.fq.gz
 done
+
+DATA=/Volumes/Seagate/SugarResearchAustraliaFV4/trimmed
+
+cd ~/data/ycs/kallisto/Trinity
+
+## kallisto: alignment-free estimation method 
+kallisto index -i TrinityEG ../../assemblies/Trinity.okayset.tr
+
+for x in `cat FV4.lst`
+	do
+		echo $x
+		kallisto quant -t 4 -b 100 -i TrinityEG -o Trinity/$x $DATA/"$x"_1paired.fq.gz $DATA/"$x"_2paired.fq.gz
+done
+
+DATA3=/Volumes/Seagate/SugarResearchAustraliaFV3/trimmed
+
+cd ~/data/ycs/kallisto/Trinity
+
+## kallisto: alignment-free estimation method 
+kallisto index -i TrinityEG ../../assemblies/Trinity.okayset.tr
+
+for x in `cat FV3.lst`
+	do
+		echo $x
+		kallisto quant -t 4 -b 100 -i TrinityEG -o Trinity/$x $DATA3/"$x"_1paired.fq.gz $DATA3/"$x"_2paired.fq.gz
+done

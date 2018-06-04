@@ -18,4 +18,3 @@ cd /scratch/03177/hertweck/ycs/master
 python $TACC_OASES_DIR/scripts/oases_pipeline.py -m 43 -M 63 -o oases --clean \
  -d ' -shortPaired -separate -fastq left.norm.fq right.norm.fq ' \
  -p ' -ins_length 250 -min_trans_lgth 200 -scaffolding no' 
-

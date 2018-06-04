@@ -23,4 +23,4 @@ cd ~/data/ycs/bowtie/Trinity
 bowtie2-build ../../assemblies/Trinity.okayset.tr TrinityEG
 
 # map reads
-bowtie2 -p 6 -x TrinityEG -1 $DATA/left.norm.fq.gz -2 $DATA/right.norm.fq.gz -S TrinityEG.sam
+bowtie2 -p 6 -x TrinityEG -1 $DATA/left.norm.fq.gz -2 $DATA/right.norm.fq.gz -S $DATA/TrinityEG.sam
